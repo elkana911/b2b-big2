@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                value="%p [%t] %c{1}.%M(%L) | %m%n"/>
+        </layout>
+    </appender>
+    <appender name="mail" class="com.big.web.b2b_big2.util.BaseFilteredSMTPAppender">
+    	<param name="BufferSize" value="512" />
+    	<param name="SMTPDebug" value="true" />
+    	<param name="SMTPHost" value="smtp.gmail.com" />
+    	<param name="SMTPUsername" value="berleha16@gmail.com" />
+    	<param name="SMTPPassword" value="berleha2" />
+    	<param name="TLS" value="true" />
+    	<param name="SMTPPort" value="587" />
+    	<param name="SMTPProtocol" value="smtps" />
+    	<param name="From" value="berleha16@gmail.com" />
+    	<param name="To" value="berleha16@yahoo.com" />
+    	<param name="Subject" value="Error B2B detected on server DEV" />
+    
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%t] %-5p %c %x - %m%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+        	<param name="LevelMin" value="error" />
+        	<param name="LevelMax" value="fatal" />
+        </filter>
+    </appender>
+    <appender name="file" class="org.apache.log4j.RollingFileAppender">
+	    <param name="append" value="false" />
+	    <param name="maxFileSize" value="10MB" />
+	    <param name="maxBackupIndex" value="10" />
+	    <param name="file" value="${catalina.home}/logs/b2b-leha.log" />
+	    <layout class="org.apache.log4j.PatternLayout">
+		<param name="ConversionPattern" 
+			value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
+	    </layout>
+	</appender>
+    
+    <logger name="net.sf.ehcache">
+        <level value="ERROR"/>
+    </logger>
+
+    <!-- Suppress success logging from InteractiveAuthenticationSuccessEvent -->
+    <logger name="org.springframework.security">
+        <level value="ERROR"/>
+    </logger>
+
+    <logger name="org.apache">
+        <level value="WARN"/>
+    </logger>
+
+    <logger name="org.apache.velocity">
+        <level value="FATAL"/>
+    </logger>
+
+    <!-- Suppress invalid warning messages from JSF -->
+    <logger name="org.apache.myfaces">
+        <level value="ERROR"/>
+    </logger>
+
+    <!-- Suppress warnings from Struts -->
+    <logger name="org.apache.struts2.util.TextProviderHelper">
+      <level value="ERROR"/>
+    </logger>
+
+    <logger name="com.big.web.b2b_big2.flight.api.kalstar.exception">
+      <level value="ERROR"/>
+    </logger>
+    
+    <logger name="com.opensymphony.xwork2.util.OgnlUtil">
+       <level value="ERROR"/>
+    </logger>
+
+    <logger name="com.opensymphony.xwork2.ognl.OgnlValueStack">
+       <level value="ERROR"/>
+    </logger>
+
+    <logger name="org.dbunit">
+        <level value="WARN"/>
+    </logger>
+
+    <logger name="org.hibernate">
+        <level value="WARN"/>
+    </logger>
+  
+    <!--logger name="org.hibernate.SQL">
+        <level value="DEBUG"/>
+    </logger-->
+
+    <logger name="org.springframework">
+        <level value="WARN"/>
+    </logger>
+
+    <logger name="com.big.web">
+        <level value="DEBUG"/>
+        <appender-ref ref="file" /> 
+    </logger>
+
+    <logger name="com.big.web.tool">
+        <level value="INFO"/>
+    </logger>
+
+    <root>
+        <level value="WARN"/>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="mail"/>
+    </root>
+
+</log4j:configuration>

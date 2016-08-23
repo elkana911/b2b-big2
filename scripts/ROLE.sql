@@ -1,0 +1,12 @@
+CREATE TABLE ROLE
+(
+  ID           NUMBER(19)                       NOT NULL,
+  DESCRIPTION  VARCHAR2(64 CHAR),
+  NAME         VARCHAR2(20 CHAR)
+)
+;
+ALTER TABLE ROLE ADD (
+  PRIMARY KEY
+ (ID)
+    USING INDEX 
+);

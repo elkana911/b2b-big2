@@ -1,0 +1,22 @@
+Dear ${user.firstName},
+
+Congratulations ! 
+
+You have successfully registered for access to Berleha Agency Network. 
+
+Your username information is below:
+
+Username: ${user.username}
+Password: ${user.confirmPassword}
+Virtual Account: ${accountVA}
+Amount to be paid: ${pay}
+Amount in words: ${amountWords}
+
+Login at: ${applicationURL}
+
+
+Your account will be activated after successful payment.
+
+Best Regards,
+
+Berleha Agency Network

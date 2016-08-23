@@ -1,0 +1,27 @@
+Dear ${agent.agent_Name},
+
+Terima kasih sudah melakukan Top Up#if ($amount == "") #else sejumlah ${amount} ${ccy}.#end
+
+Saldo Anda akan otomatis bertambah dalam jangka waktu 30 menit - 60 menit.
+
+Silakan lakukan pengecekan melalui aplikasi di ${applicationURL}
+
+Informasi akun Anda adalah sebagai berikut:  
+- Virtual Account: ${topup.VAN}
+- Bank Code: ${topup.bankCodeVA} ${bankName}
+- Outstanding: ${topup.outstanding} ${topup.currency} 
+- Balance: ${topup.balance} ${topup.currency}
+
+
+Best Regards,
+
+Berleha Agency Network
+Ruko Rodeo Blok C 20
+Jl. Boulevard Gading Serpong
+Tangerang, 15810
+021-6899-8398
+
+
+Pesan ini dikirim ke email Anda karena Anda telah melakukan pembayaran Top Up.
+Mohon untuk tidak me-reply email ini.
+Terima Kasih.

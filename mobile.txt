@@ -1,0 +1,29 @@
+Berisi panduan menggunakan web service yang akan digunakan di mobile device:
+
+
+1. Login
+
+2. Cari tiket penerbangan
+
+3. Booking Tiket
+
+4. issue tiket
+
+
+
+TODO:
+1. tes dulu menggunaan soap UI, get the url
+
+To check available services:
+http://../services/
+http://../services/UserService?wsdl
+
+
+To Generate stubs:
+C:\tmp\FlightService>wsdl2java -client -V http://localhost:7070/b2b-big2/services/FlightService?wsdl
+
+Worry about login before using the web service ?
+ga usah kuatir, yg lewat /services/FlightManager ternyata 
+
+
+

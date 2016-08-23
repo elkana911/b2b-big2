@@ -1,0 +1,771 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<table name="app_user">
+		<column>id</column>
+		<column>username</column>
+		<column>password</column>
+		<column>first_name</column>
+		<column>last_name</column>
+		<column>address</column>
+		<column>city</column>
+		<column>country</column>
+		<column>email</column>
+		<column>phone_number</column>
+		<column>postal_code</column>
+		<column>province</column>
+		<column>website</column>
+		<column>password_hint</column>
+		<column>version</column>
+		<column>account_enabled</column>
+		<column>account_expired</column>
+		<column>account_locked</column>
+		<column>credentials_expired</column>
+		<column>created_date</column>
+		<row>
+			<value description="id">-1</value>
+			<value description="username">user</value>
+			<value description="password">$2a$10$CnQVJ9bsWBjMpeSKrrdDEeuIptZxXrwtI6CZ/OgtNxhIgpKxXeT9y</value>
+			<value description="first_name">Tomcat</value>
+			<value description="last_name">User</value>
+			<value description="address"></value>
+			<value description="city">Denver</value>
+			<value description="country">US</value>
+			<value description="email">matt_raible@yahoo.com</value>
+			<value description="phone_number"></value>
+			<value description="postal_code">80210</value>
+			<value description="province">CO</value>
+			<value description="website">http://tomcat.apache.org</value>
+			<value description="password_hint"><![CDATA[A male kitty.]]></value>
+			<value description="version">1</value>
+			<value description="account_enabled">1</value>
+			<value description="account_expired">0</value>
+			<value description="account_locked">0</value>
+			<value description="credentials_expired">0</value>
+			<null />
+		</row>
+	</table>
+	<table name="role">
+		<column>id</column>
+		<column>name</column>
+		<column>description</column>
+		<row>
+			<value description="id">-1</value>
+			<value description="name">ROLE_ADMIN</value>
+			<value description="description"><![CDATA[Administrator role (can edit Users)]]></value>
+		</row>
+		<row>
+			<value description="id">-2</value>
+			<value description="name">ROLE_USER</value>
+			<value description="description"><![CDATA[Default role for all Users]]></value>
+		</row>
+	</table>
+	<table name="user_role">
+		<column>user_id</column>
+		<column>role_id</column>
+		<row>
+			<value description="user_id">-1</value>
+			<value description="role_id">-2</value>
+		</row>
+		<row>
+			<value description="user_id">-2</value>
+			<value description="role_id">-1</value>
+		</row>
+		<row>
+			<value description="user_id">-3</value>
+			<value description="role_id">-1</value>
+		</row>
+		<row>
+			<value description="user_id">-3</value>
+			<value description="role_id">-2</value>
+		</row>
+	</table>
+
+	<!-- usahakan table2 master tidak perlu define disini yg jumlahnya ada ribuan. 
+		make sure you own the backups -->
+	<table name="setup">
+		<column>name</column>
+		<column>value</column>
+		<row>
+			<value description="name">local.logo</value>
+			<value description="value"><![CDATA[c:/b2b/tmp/]]></value>
+		</row>
+		<row>
+			<value description="name">local.news.src</value>
+			<value description="value"><![CDATA[c:/b2b/news/]]></value>
+		</row>
+		<row>
+			<value description="name">local.news.thumb</value>
+			<value description="value"><![CDATA[c:/b2b/news/thumbs/]]></value>
+		</row>
+		<row>
+			<value description="name">email.cache</value>
+			<value description="value"><![CDATA[c:/b2b/email/cache/]]></value>
+		</row>
+		<row>
+			<value description="name">email.cache.age.days</value>
+			<value description="value">14</value>
+		</row>
+		<row>
+			<value description="name">kalstar.protocol</value>
+			<value description="value">http</value>
+		</row>
+		<row>
+			<value description="name">kalstar.host</value>
+			<value description="value">ws.demo.awan.sqiva.com</value>
+		</row>
+		<row>
+			<value description="name">kalstar.apikey</value>
+			<value description="value">5EB9FE68-8915-11E0-BEA0-C9892766ECF2</value>
+		</row>
+		<row>
+			<value description="name">kalstar.code</value>
+			<value description="value">KD</value>
+		</row>
+		<row>
+			<value description="name">aviastar.protocol</value>
+			<value description="value">http</value>
+		</row>
+		<row>
+			<value description="name">aviastar.host</value>
+			<value description="value">ws.demo.awan.sqiva.com</value>
+		</row>
+		<row>
+			<value description="name">aviastar.apikey</value>
+			<value description="value">E2E855D2-AB8E-11E4-9C88-E805EA0D0EEC</value>
+		</row>
+		<row>
+			<value description="name">aviastar.code</value>
+			<value description="value">MV</value>
+		</row>
+		<row>
+			<value description="name">trigana.protocol</value>
+			<value description="value">http</value>
+		</row>
+		<row>
+			<value description="name">trigana.host</value>
+			<value description="value">ws.demo.awan.sqiva.com</value>
+		</row>
+		<row>
+			<value description="name">trigana.apikey</value>
+			<value description="value">5EB9FE68-8915-11E0-BEA0-C9892766ECF2</value>
+		</row>
+		<row>
+			<value description="name">trigana.code</value>
+			<value description="value">IL</value>
+		</row>
+	</table>
+	<table name="mst_terminals">
+		<column>TERMINAL_ID</column>
+		<column>TERMINAL_NAME</column>
+		<column>AIRPORT_ID</column>
+		<row>
+			<value description="TERMINAL_ID">1</value>
+			<value description="TERMINAL_NAME">1A</value>
+			<value description="AIRPORT_ID">04F5A33A34200A70E0535A020A0A1BFD</value>
+		</row>
+		<row>
+			<value description="TERMINAL_ID">2</value>
+			<value description="TERMINAL_NAME">1B</value>
+			<value description="AIRPORT_ID">04F5A33A34200A70E0535A020A0A1BFD</value>
+		</row>
+		<row>
+			<value description="TERMINAL_ID">3</value>
+			<value description="TERMINAL_NAME">1C</value>
+			<value description="AIRPORT_ID">04F5A33A34200A70E0535A020A0A1BFD</value>
+		</row>
+		<row>
+			<value description="TERMINAL_ID">4</value>
+			<value description="TERMINAL_NAME">2D</value>
+			<value description="AIRPORT_ID">04F5A33A34200A70E0535A020A0A1BFD</value>
+		</row>
+		<row>
+			<value description="TERMINAL_ID">5</value>
+			<value description="TERMINAL_NAME">2E</value>
+			<value description="AIRPORT_ID">04F5A33A34200A70E0535A020A0A1BFD</value>
+		</row>
+		<row>
+			<value description="TERMINAL_ID">6</value>
+			<value description="TERMINAL_NAME">2F</value>
+			<value description="AIRPORT_ID">04F5A33A34200A70E0535A020A0A1BFD</value>
+		</row>
+	</table>
+	<table name="mst_agents">
+		<column>ID</column>
+		<column>AGENT_ID</column>
+		<column>AGENT_NAME</column>
+		<column>ADDRESS1</column>
+		<column>ADDRESS2</column>
+		<column>CITY</column>
+		<column>STATECODE</column>
+		<column>ZIPCODE</column>
+		<column>COUNTRY_ID</column>
+		<column>WEBSITE1</column>
+		<column>WEBSITE2</column>
+		<column>WEBSITE3</column>
+		<column>PHONE1</column>
+		<column>PHONE2</column>
+		<column>PHONE3</column>
+		<column>FAX1</column>
+		<column>FAX2</column>
+		<column>EMAIL1</column>
+		<column>EMAIL2</column>
+		<column>NPWP</column>
+		<column>LATITUDE</column>
+		<column>LONGITUDE</column>
+		<row>
+			<value description="ID">07A5AAE6E3AE4926E0535A020A0A8066</value>
+			<value description="AGENT_ID">16</value>
+			<value description="AGENT_NAME">BERJAYA INOVASI GLOBAL</value>
+			<value description="ADDRESS1">Ruko Tematik Pasar Modern&#13;&#10;Paramount
+				Serpong Blok </value>
+			<value description="ADDRESS2"></value>
+			<value description="CITY">Gading Serpong</value>
+			<value description="STATECODE"></value>
+			<value description="ZIPCODE">15810</value>
+			<value description="COUNTRY_ID">62</value>
+			<value description="WEBSITE1">www.leha-leha.com</value>
+			<value description="WEBSITE2"></value>
+			<value description="WEBSITE3"></value>
+			<value description="PHONE1">021-29324380</value>
+			<value description="PHONE2"></value>
+			<value description="PHONE3"></value>
+			<value description="FAX1"></value>
+			<value description="FAX2"></value>
+			<value description="EMAIL1">cs@leha-leha.com</value>
+			<value description="EMAIL2">admin@leha-leha.com</value>
+			<value description="NPWP"></value>
+			<value description="LATITUDE">-6.249935</value>
+			<value description="LONGITUDE">106.622979</value>
+		</row>
+
+		<row>
+			<value description="ID">07A5AAE6E3AF4926E0535A020A0A8066</value>
+			<value description="AGENT_ID">112</value>
+			<value description="AGENT_NAME">VOLTRAS AGENT NETWORK</value>
+			<value description="ADDRESS1">Golden Boulevard S-50&#13;&#10;Bumi Serpong
+				Damai</value>
+			<value description="ADDRESS2"></value>
+			<value description="CITY">Tangerang Selatan</value>
+			<value description="STATECODE"></value>
+			<value description="ZIPCODE">15323</value>
+			<value description="COUNTRY_ID">62</value>
+			<value description="WEBSITE1"><![CDATA[www.travelagent.co.id]]></value>
+			<value description="WEBSITE2"></value>
+			<value description="WEBSITE3"></value>
+			<value description="PHONE1">021-53163350</value>
+			<value description="PHONE2"></value>
+			<value description="PHONE3"></value>
+			<value description="FAX1">021-53163352</value>
+			<value description="FAX2"></value>
+			<value description="EMAIL1">sales@travelagent.co.id</value>
+			<value description="EMAIL2">helpdesk@travelagent.co.id</value>
+			<value description="NPWP"></value>
+			<value description="LATITUDE"></value>
+			<value description="LONGITUDE"></value>
+		</row>
+		<row>
+			<value description="ID">07A5AAE6E3B04926E0535A020A0A8066</value>
+			<value description="AGENT_ID">113</value>
+			<value description="AGENT_NAME"><![CDATA[MANDIRA ABADI HOTEL]]></value>
+			<value description="ADDRESS1">Jl. Taman Ubud Asri III / 25&#13;&#10;Lippo
+				Village
+			</value>
+			<value description="ADDRESS2"></value>
+			<value description="CITY">Tangerang</value>
+			<value description="STATECODE"></value>
+			<value description="ZIPCODE"></value>
+			<value description="COUNTRY_ID">62</value>
+			<value description="WEBSITE1"><![CDATA[www.mandiratravel.com]]></value>
+			<value description="WEBSITE2"></value>
+			<value description="WEBSITE3"></value>
+			<value description="PHONE1">081510334088</value>
+			<value description="PHONE2"></value>
+			<value description="PHONE3"></value>
+			<value description="FAX1"><![CDATA[021-59493189]]></value>
+			<value description="FAX2"></value>
+			<value description="EMAIL1"><![CDATA[inquiry@mandiratravel.com]]></value>
+			<value description="EMAIL2"></value>
+			<value description="NPWP"></value>
+			<value description="LATITUDE"></value>
+			<value description="LONGITUDE"></value>
+		</row>
+		<row>
+			<value description="ID">07A5AAE6E3B14926E0535A020A0A8066</value>
+			<value description="AGENT_ID">212</value>
+			<value description="AGENT_NAME"><![CDATA[SRIWIJAYA AIR AGENT]]></value>
+			<value description="ADDRESS1"></value>
+			<value description="ADDRESS2"></value>
+			<value description="CITY"></value>
+			<value description="STATECODE"></value>
+			<value description="ZIPCODE"></value>
+			<value description="COUNTRY_ID">62</value>
+			<value description="WEBSITE1"><![CDATA[https://agent.sriwijayaair.co.id]]></value>
+			<value description="WEBSITE2"></value>
+			<value description="WEBSITE3"></value>
+			<value description="PHONE1"></value>
+			<value description="PHONE2"></value>
+			<value description="PHONE3"></value>
+			<value description="FAX1"></value>
+			<value description="FAX2"></value>
+			<value description="EMAIL1"></value>
+			<value description="EMAIL2"></value>
+			<value description="NPWP"></value>
+			<value description="LATITUDE"></value>
+			<value description="LONGITUDE"></value>
+		</row>
+		<row>
+			<value description="ID">07A5AAE6E3B24926E0535A020A0A8066</value>
+			<value description="AGENT_ID">213</value>
+			<value description="AGENT_NAME"><![CDATA[LION AIR AGENT]]></value>
+			<value description="ADDRESS1"></value>
+			<value description="ADDRESS2"></value>
+			<value description="CITY"></value>
+			<value description="STATECODE"></value>
+			<value description="ZIPCODE"></value>
+			<value description="COUNTRY_ID">62</value>
+			<value description="WEBSITE1"><![CDATA[https://agent.lionair.co.id/LionAirAgentsPortal/]]></value>
+			<value description="WEBSITE2"></value>
+			<value description="WEBSITE3"></value>
+			<value description="PHONE1"></value>
+			<value description="PHONE2"></value>
+			<value description="PHONE3"></value>
+			<value description="FAX1"></value>
+			<value description="FAX2"></value>
+			<value description="EMAIL1"></value>
+			<value description="EMAIL2"></value>
+			<value description="NPWP"></value>
+			<value description="LATITUDE"></value>
+			<value description="LONGITUDE"></value>
+		</row>
+		<row>
+			<value description="ID">07A5AAE6E3B34926E0535A020A0A8066</value>
+			<value description="AGENT_ID">214</value>
+			<value description="AGENT_NAME">AGODA</value>
+			<value description="ADDRESS1"></value>
+			<value description="ADDRESS2"></value>
+			<value description="CITY"></value>
+			<value description="STATECODE"></value>
+			<value description="ZIPCODE"></value>
+			<null />
+			<value description="WEBSITE1"><![CDATA[www.agoda.com]]></value>
+			<value description="WEBSITE2"></value>
+			<value description="WEBSITE3"></value>
+			<value description="PHONE1"></value>
+			<value description="PHONE2"></value>
+			<value description="PHONE3"></value>
+			<value description="FAX1"></value>
+			<value description="FAX2"></value>
+			<value description="EMAIL1"></value>
+			<value description="EMAIL2"></value>
+			<value description="NPWP"></value>
+			<value description="LATITUDE"></value>
+			<value description="LONGITUDE"></value>
+		</row>
+
+		<row>
+			<value description="ID">07A5AAE6E3B44926E0535A020A0A8066</value>
+			<value description="AGENT_ID">3385</value>
+			<value description="AGENT_NAME"><![CDATA[EXPEDIA AFFILIATE NETWORK]]></value>
+			<value description="ADDRESS1"></value>
+			<value description="ADDRESS2"></value>
+			<value description="CITY"></value>
+			<value description="STATECODE"></value>
+			<value description="ZIPCODE"></value>
+			<null />
+			<value description="WEBSITE1"><![CDATA[http://www.expediaaffiliate.com]]></value>
+			<value description="WEBSITE2"><![CDATA[www.ean.com]]></value>
+			<value description="WEBSITE3"></value>
+			<value description="PHONE1"></value>
+			<value description="PHONE2"></value>
+			<value description="PHONE3"></value>
+			<value description="FAX1"></value>
+			<value description="FAX2"></value>
+			<value description="EMAIL1"></value>
+			<value description="EMAIL2"></value>
+			<value description="NPWP"></value>
+			<value description="LATITUDE"></value>
+			<value description="LONGITUDE"></value>
+		</row>
+	</table>
+
+	<table name="mst_countries">
+		<column>country_id</column>
+		<column>country_name</column>
+		<column>capital</column>
+		<column>country_code</column>
+		<column>currency_code</column>
+		<column>currency_name</column>
+		<row>
+			<value>62</value>
+			<value>Indonesia</value>
+			<value>Jakarta</value>
+			<value>ID</value>
+			<value>IDR</value>
+			<value>Rupiah</value>
+		</row>
+		<row>
+			<value>60</value>
+			<value>Malaysia</value>
+			<value>Kuala Lumpur</value>
+			<value>MY</value>
+			<value>MYR</value>
+			<value>Ringgit</value>
+		</row>
+		<row>
+			<value>65</value>
+			<value>Singapore</value>
+			<value>Singapore</value>
+			<value>SG</value>
+			<value>SGD</value>
+			<value>Dollar</value>
+		</row>
+		<row>
+			<value>66</value>
+			<value>Thailand</value>
+			<value>Bangkok</value>
+			<value>TH</value>
+			<value>THB</value>
+			<value>Baht</value>
+		</row>
+	</table>
+
+	<table name="mst_airlines">
+		<column>AIRLINE_ID</column>
+		<column>NAMA</column>
+		<column>CODE</column>
+		<column>HQ</column>
+		<column>COUNTRYID</column>
+		<column>WEBSITE1</column>
+		<column>WEBSITE2</column>
+		<column>CALL_CENTER</column>
+		<column>PHONE1</column>
+		<column>PHONE2</column>
+		<column>PHONE3</column>
+		<column>EMAIL1</column>
+		<column>EMAIL2</column>
+		<column>INACTIVE</column>
+		<column>AGENTID</column>
+		<row>
+			<value>3290</value>
+			<value>LION AIR</value>
+			<value>JT</value>
+			<null />
+			<value>62</value>
+			<value>www.lionair.co.id</value>
+			<null />
+			<value>0804-1-77-88-99</value>
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<value>07A5AAE6E3B24926E0535A020A0A8066</value>
+		</row>
+		<row>
+			<value>4454</value>
+			<value>SRIWIJAYA AIR</value>
+			<value>SJ</value>
+			<null />
+			<value>62</value>
+			<value>www.sriwijayaair.co.id</value>
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<value>07A5AAE6E3B14926E0535A020A0A8066</value>
+		</row>
+		<row>
+			<value>19305</value>
+			<value>CITILINK</value>
+			<value>QG</value>
+			<null />
+			<value>62</value>
+			<value>www.citilink.co.id</value>
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+		</row>
+		<row>
+			<value>2520</value>
+			<value>GARUDA INDONESIA</value>
+			<value>GA</value>
+			<null />
+			<value>62</value>
+			<value>www.garuda-indonesia.com</value>
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+		</row>
+		<row>
+			<value>2857</value>
+			<value>AIR ASIA</value>
+			<value>QZ</value>
+			<null />
+			<value>62</value>
+			<value>www.airasia.com/id/</value>
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+		</row>
+		<row>
+			<value>4936</value>
+			<value>TIGER AIRWAYS</value>
+			<value>TR</value>
+			<null />
+			<value>65</value>
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<value>Y</value>
+		</row>
+		<row>
+			<value>5451</value>
+			<value>WINGS AIR</value>
+			<value>IW</value>
+			<null />
+			<value>62</value>
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<value>07A5AAE6E3B24926E0535A020A0A8066</value>
+		</row>
+		<row>
+			<value>18732</value>
+			<value>MALINDO AIR</value>
+			<value>OD</value>
+			<null />
+			<value>60</value>
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<value>07A5AAE6E3B24926E0535A020A0A8066</value>
+		</row>
+		<row>
+			<value>1111</value>
+			<value>BATIK AIR</value>
+			<value>ID</value>
+			<null />
+			<value>62</value>
+			<value>www.batikair.com</value>
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<value>07A5AAE6E3B24926E0535A020A0A8066</value>
+		</row>
+		<row>
+			<value>19225</value>
+			<value>THAI LION AIR</value>
+			<value>SL</value>
+			<null />
+			<value>66</value>
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+		</row>
+		<row>
+			<value>4933</value>
+			<value>TRIGANA AIR</value>
+			<value>IL</value>
+			<null />
+			<value>62</value>
+			<value>www.trigana-air.com</value>
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+		</row>
+		<row>
+			<value>14858</value>
+			<value>KALSTAR</value>
+			<value>KD</value>
+			<null />
+			<value>62</value>
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+		</row>
+		<row>
+			<value>45000</value>
+			<value>EXPRESS AIR</value>
+			<value>XN</value>
+			<null />
+			<value>62</value>
+			<value>www.xpressair.co.id</value>
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+		</row>
+		<row>
+			<value>45001</value>
+			<value>SUSI AIR</value>
+			<value>SI</value>
+			<null />
+			<value>62</value>
+			<value>fly.susiair.com</value>
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+		</row>
+		<row>
+			<value>45002</value>
+			<value>NAM AIR</value>
+			<value>IN</value>
+			<null />
+			<value>62</value>
+			<value>www.sriwijayaair.co.id</value>
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<null />
+			<value>07A5AAE6E3B14926E0535A020A0A8066</value>
+		</row>
+	</table>
+	<table name="feeds">
+		<column>id</column>
+		<column>title</column>
+		<column>remarks</column>
+		<column>lastupdate</column>
+		<column>headline</column>
+		<column>thumbUrl</column>
+		<column>source</column>
+		<row>
+			<value>CD5D18C190244178BA15B2CA669E0D3F</value>
+			<value><![CDATA[Berleha Agent Network telah resmi dibuka ! Nantikan harga diskon besar-besaran.]]></value>
+			<value><![CDATA[Berleha Agent Network telah resmi dibuka ! Nantikan harga diskon besar-besaran.]]></value>
+			<value><![CDATA[2014-11-12 21:21:21]]></value>
+			<value>1</value>
+			<value><![CDATA[http://travels.patrik.com/ra/img/wayag01.jpg]]></value>			
+			<null />
+		</row>
+		<row>
+			<value>C1CECFA6E47F4DAAA27A385176EA2CE4</value>
+			<value><![CDATA[TARGET WEBSITE LEHA-LEHA LAUNCHING JANUARI 2015 !!]]></value>
+			<value><![CDATA[Kabar gembira untuk para agent travel! Website Leha-Leha akan segera bisa digunakan sekitar Januari 2015. Nantikan promosi dan diskon besar-besaran dari kami untuk mendapatkan harga yang menguntungkan ! <p>Semoga dengan adanya website baru ini dapat mempermudah Teman-teman dalam penggunaan sistem Berleha Agency Network untuk meningkatkan penjualan tiket domestik dan internasional.]]></value>
+			<value><![CDATA[2014-11-14 21:01:01]]></value>
+			<value>1</value>
+			<value><![CDATA[http://travels.patrik.com/ra/img/wayag01.jpg]]></value>			
+			<null />
+		</row>
+	</table>
+	<table name="mst_bank">
+		<column>id</column>
+		<column>name</column>
+		<column>code</column>
+		<column>van</column>
+		<row>
+			<value>D8514B23F2A349D892A12E3032721281</value>
+			<value>BANK CENTRAL ASIA</value>
+			<value>014</value>
+			<null />
+		</row>
+		<row>
+			<value>C9B5B1338B914743B59E2F1DD2D1195A</value>
+			<value>CIMB NIAGA</value>
+			<value>022</value>
+			<value>1539</value>
+		</row>
+		<row>
+			<value>6AC37AD5955D4FB9A32770D0674930FC</value>
+			<value>PERMATA BANK</value>
+			<value>013</value>
+			<null />
+		</row>
+	</table>
+	<table name="paymentway">
+		<column>id</column>
+		<column>nama</column>
+		<column>orderid</column>
+		<row>
+			<value>1</value>
+			<value>ATM</value>
+			<value>1</value>
+		</row>
+		<row>
+			<value>2</value>
+			<value>CIMB Virtual Account</value>
+			<value>2</value>
+		</row>
+	</table>
+
+</dataset>

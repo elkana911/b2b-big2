@@ -1,0 +1,14 @@
+
+
+GUIDE:
+
+CREATE LOCAL FOLDER:
+/home/b2b/
+/home/b2b/reports/
+
+
+INSTALL REPORT-FONTS:
+copy verdana.ttf and tahoma.ttf into /usr/java/jdk1.7.0_60/JRE/lib/fonts
+check path with $which java
+
+

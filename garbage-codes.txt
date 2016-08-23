@@ -1,0 +1,915 @@
+
+    private void testEmail(final HttpServletRequest request){
+    	
+        final Locale locale = request.getLocale();
+        // Send an account information e-mail
+        message.setSubject(getText("signup.email.subject", locale));
+
+        try {
+        	User user = new User();
+        	
+        	user.setEmail("elkana911@yahoo.com");
+        	user.setUsername("eric");
+        	user.setConfirmPassword("eric");
+        	user.setFirstName("Eric Travel");
+        	
+        	UserAccountVO acc = new UserAccountVO();
+        	acc.setNo("1019028910000001");
+        	acc.setTopup_amout(new BigDecimal(1000000));
+        	
+        	
+            if (log.isDebugEnabled()) {
+                log.debug("sending e-mail to user [" + user.getEmail() + "]...");
+            }
+
+            message.setTo(user.getFirstName() + "<" + user.getEmail() + ">");
+
+            Map<String, Serializable> model = new HashMap<String, Serializable>();
+            model.put("user", user);
+            
+//            String pay = Utils.prettyRupiah(acc.getTopup_amout().doubleValue());
+
+            DecimalFormat formatter = new DecimalFormat("###,###,###.##");
+            String pay = formatter.format(acc.getTopup_amout().doubleValue());
+            
+            model.put("pay", pay);
+            
+            //aneh, sudah dicoba dengan Rp. 1.000.000 email tidak terkirim kenapa ya ????? 
+            //maunya 1.000.000 atau 1.000.000 IDR atau Rupiah 1.000.000,-
+
+//            String amt = Rupiah.say(acc.getTopup_amout().doubleValue());
+            model.put("amountWords", Rupiah.say(acc.getTopup_amout().doubleValue()));
+            
+//            model.put("amountWords", Rupiah.say(acc.getTopup_amout().doubleValue()));
+            
+            model.put("accountVA", Utils.prettyVAN(acc.getNo()));
+            model.put("message", getText("signup.email.message", locale));
+            model.put("applicationURL", RequestUtil.getAppURL(request));
+        	
+            mailEngine.sendMessage(message, "accountCreated.vm", model);
+
+//            sendUserMessage(user, msg, RequestUtil.getAppURL(request));
+        } catch (final MailException me) {
+            saveError(request, me.getMostSpecificCause().getMessage());
+        }
+    	
+        throw new RuntimeException("dipaksa error");
+    }
+    
+
+
+
+				/*
+				//let ODR update all price first ?
+				FlightSelect fs = FlightSelect.parse(idDepCombination[0]);
+				
+				FlightAvailSeatVO fas = flightManager.getFlightAvailSeat(fs.getFlightavailid());
+
+				System.out.println("before ODR called, fas.id is " + fas.getFlightavailid());
+				
+				Airline airline = Airline.getAirline(fas.getAirline());
+				try {
+					odrResult = odrHandler.getFareDetails(fas.getDeparture(), fas.getArrival(), fas.getDep_time(), airline, fas.getFlightnum());
+					
+					List<FareInfo> fareInfos = KalstarHandler.convertFareDetailIntoFareInfo(fs.getSeat().getKelas(), adults, childs, infants, ((ResponseGetFare)odrResult).getFare_info());
+					
+					//fix route
+					for (int i = 0; i < fareInfos.size(); i++){
+						FareInfo fi = fareInfos.get(i);
+
+						Airport _from = new Airport(null, null, fas.getDeparture(), fas.getDep_time());
+						Airport _to = new Airport(null, null, fas.getArrival(), fas.getArr_time());
+						
+						fi.setRoute(new Route(_from, _to));
+						fi.setRouteMode(DepartOrReturn.DEPART);
+						fi.setFlightNo(fas.getFlightnum());
+
+						total = total.add(fi.getRate() == null ? BigDecimal.ZERO : fi.getRate());
+						
+						tax = tax.add(fi.getTax() == null ? BigDecimal.ZERO : fi.getTax());
+						
+						fareInfos.set(i, fi);
+					}
+					
+					list.addAll(fareInfos);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				odrCalled = true;
+				System.out.println("after ODR called");
+				 */
+
+
+
+
+
+    /*
+     * Please use HotelSearchController. this func will delete soon
+     */
+    @RequestMapping(value = "/hotel_old/search", method = RequestMethod.GET)
+    public ModelAndView searchForm( @RequestParam(value = "startDate", required = false) String startDate,	//dont set required=true krn page tdk akan nongol
+    		@RequestParam(value = "endDate", required = false) String endDate,
+    		@RequestParam(value = "roomCount", required = false) String roomCount,	//cant use int for now. ga tau knp
+    		@RequestParam(value = "paxCount", required = false) String paxCount,	
+    		Model model){
+
+        List<HotelVO> list = hotelManager.search(null);
+        	
+        model.addAttribute("hotelList", list);
+        
+    	return new ModelAndView("hotel_old/searchForm", model.asMap());
+    }
+    
+    
+    
+    		&& booking.getCheckoutDate().before(booking.getCheckinDate())) {
+
+
+    @Pattern(regexp = "[0-9]{16}", message = "{invalidCreditCardPattern}")
+    public String getCreditCard() {
+	return creditCard;
+    }
+
+
+    @Transient
+    public BigDecimal getTotal() {
+	return hotel.getPrice().multiply(new BigDecimal(getNights()));
+    }
+
+    @Transient
+    public int getNights() {
+	if (checkinDate == null || checkoutDate == null) {
+	    return 0;
+	} else {
+	    return (int) (checkoutDate.getTime() - checkinDate.getTime()) / 1000 / 60 / 60 / 24;
+	}
+    }
+    
+    
+		function showData(value){ 
+			console.log("showData " + value);
+			// Send request only if user types alphabet
+			 if(value.match(/^[A-z]+$/)){
+					console.log("showData " + value + " is match");
+				 // Send request and get the data
+                 $.get("../flight/auto?com="+value,function(data){
+
+                     // Get each item separated by new line
+                     var items=data.split("\n");
+
+                     // put those items in autocomplete! That's it!
+                     i.autocomplete({source:items});
+                 });				 
+			 }
+
+		    /*              
+			$.ajax({
+			    url : "ur_servlet?name="+value,
+			    type : "POST",
+			    async : false,
+			    success : function(data) {
+					Do something with the data here
+			    }
+			});*/
+			}
+
+$this.find('input').autocomplete({
+    source: "/autocomplete_tc_testcasename", 
+    minLength: 2,
+    focus: function(e,ui){
+        $(this).val(ui.item.label);
+        return false;
+    },   
+    select: function(e, ui) {
+        console.log("Selected: "+ui.item.value);
+    }    
+}); 
+    
+
+
+
+
+
+
+contoh cara ambil attribute di JSP via controller:
+    	/*
+    	//    	skrg gmn caranya ambil data contact ? gampang, via attribute name
+    	//		disabled karena sudah terisi otomatis di form.    	
+    	//bookingForm.getAdult().clear();
+    	for (int i = 0; i < bookingForm.getSearchForm().getAdult();i++) {
+    		BasicContact adult = new BasicContact();
+    		String ttl = request.getParameter("adult[" + i + "].title");
+//    		adult.setTitle();
+    		//adult.setFullName(request.getParameter("adult[" + i + "].fullName"));
+    	//	adult.setIdCard(request.getParameter("adult[" + i + "].idCard"));
+    		String ssr = request.getParameter("adult[" + i + "].specialRequest");
+//    		adult.setSpecialRequest(ssr);
+
+    	//	bookingForm.getAdult().add(adult);
+    	}*/
+
+    	/*
+    	List<?> depDetails = flightManager.getfsegetFlightB2BDetails(bookingForm.getDepId());
+    	bookingForm.setDepDetail(depDetails);
+    	if (bookingForm.getSearchForm().getTripMode() == 1) {
+    		List<?> retDetails = flightManager.getFlightB2BDetails(bookingForm.getRetId());
+        	bookingForm.setReturnDetail(returnDetails);    		
+    	}
+    	*/
+
+
+
+
+    @RequestMapping(value="/{name}", method = RequestMethod.GET)
+    public String kitchen(@PathVariable String name, HttpServletRequest request) {
+        try {
+            Runtime.getRuntime().exec("/usr/local/heyu-2.6.0/heyu " + name + " A2");
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return "redirect:" + request.getHeader("Referer");
+    }
+
+
+    
+contoh konversi beda Object di hibernate: (lihat bagian Transformers)
+Criteria cr = session.createCriteria(User.class)
+    .setProjection(Projections.projectionList()
+      .add(Projections.property("id"), "id")
+      .add(Projections.property("Name"), "Name"))
+    .setResultTransformer(Transformers.aliasToBean(User.class));
+  List<User> list = cr.list();
+more http://stackoverflow.com/questions/11626761/hibernate-criteria-query-to-get-specific-columns
+
+
+    $.ajax({
+        url: '${pageContext.request.contextPath}/MyControllerUrl',
+        dataType: 'json',
+        async: false,
+        success: function(objectInfo) {
+            $.each(objectInfo, function(key, object) {
+                myJsList[object.code] = object.label;
+            });
+        }
+    });
+
+
+
+$(".myForm").submit(function(event) {
+
+    var success = true;
+
+    $.ajax({
+        url: "/validate",
+        type: "GET",
+        async: false, //block until we get a response
+        data: { id : $("#idInput").val() },
+        success: function(error) {
+            if (error) {
+                $("#errorContainer").html(error);
+                success = false;
+            }
+        }
+    });
+
+    return success;
+
+});
+
+  
+		<display:column title="" media="html">
+			<button type="button" name="select" value="buy"
+				class="btn btn-success" style="margin: 0 0 0 4px"
+				onclick="window.location.href='./flightdtl/${flights.flightdetid}'"><fmt:message key="button.book" /></button>
+			<!-- hotels mengacu pd display:table id -->
+		</display:column>
+
+
+<c:if test="${childCount > 0}">
+<div class="row well" id="childForm">
+	<div class="col-sm-1">
+		<appfuse:label key="flight.children"/>
+	</div>
+	<div class="col-sm-10">
+		<table width="400" border="0" style="font-size:11px">
+			<c:forEach var="i" begin="1" end="${childCount}">
+			<tr>
+					<td>${i}</td>
+				    <td>
+				    	<select id="childTitle${i}">
+				    		<option>--</option>
+				    		<c:forTokens items="${gelar}" delims="," var="it">
+				    			<option>${it}</option>
+				    		</c:forTokens>
+
+				    	</select>
+				    </td>
+				    
+				    <td><input type="text" id="childFullName${i}" placeholder="* &lt;Full Name&gt;"/></td>
+				    <td><input type="text" id="childIdNo${i}" placeholder="&lt;ID No&gt;"/></td>
+				    <td style="width:10%;"><input type="text" id="childBirthday${i}" placeholder="* &lt;dd/mm/yyyy&gt;"/></td>
+				    <td>
+				    	<select id="childSSR">
+				    		<option>--</option>
+				    		<c:forTokens items="${specialReq}" delims="," var="it">
+				    			<option>${it}</option>
+				    		</c:forTokens>
+
+				    	</select>
+				    </td>
+					
+				</tr>
+			</c:forEach>
+		</table>			
+	</div>			
+</div>
+</c:if>
+
+
+    <filter>
+    <filter-name>CorsFilter</filter-name>
+    <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
+<init-param>
+    <param-name>cors.allowed.origins</param-name>
+    <param-value>*</param-value>
+  </init-param>
+  <init-param>
+    <param-name>cors.allowed.methods</param-name>
+    <param-value>GET,POST,HEAD,OPTIONS,PUT</param-value>
+  </init-param>
+  <init-param>
+    <param-name>cors.allowed.headers</param-name>
+    <param-value>Content-Type,X-Requested-With,accept,Origin,Access-Control-Request-Method,Access-Control-Request-Headers</param-value>
+  </init-param>
+  <init-param>
+    <param-name>cors.exposed.headers</param-name>
+    <param-value>Access-Control-Allow-Origin,Access-Control-Allow-Credentials</param-value>
+  </init-param>
+
+  <init-param>
+    <param-name>cors.preflight.maxage</param-name>
+    <param-value>10</param-value>
+  </init-param>
+</filter>
+
+<filter-mapping>
+    <!-- CORS Filter mapping -->
+    <filter-name>CorsFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+</filter-mapping>
+
+
+      
+      
+      <%-- 								<td><form:input id="nta${index }" readonly="true" path="nta" cssStyle="text-align: right; border: none; width: 100%" onclick="location.href='1.html';" /></td> --%>
+<%-- 								<td><form:input id="ntaCommission${index }" readonly="true" path="ntaCommission" cssStyle="text-align: right; border: none; width: 100%"/></td> --%>
+<%-- 								<td><form:input id="ntaPax${index}" readonly="true" path="amountTicket" cssStyle="text-align: right;border:none; width: 100%"/></td> --%>
+
+
+
+
+	@SuppressWarnings("rawtypes")
+	@Deprecated
+	@Override
+	public List<FlightSearchB2B> searchOneWayFlightB2BCitilink(Date departDate, String departIata,
+			String destinationIata, List<String> airlines, boolean searchPast) {
+		if (departDate == null) departDate = new Date();
+		String _departDate = new SimpleDateFormat("dd/MM/yyyy").format(departDate);
+		String _origin = StringUtils.isEmpty(departIata) ? null : getAirportCode(departIata);
+		String _destinationIata = StringUtils.isEmpty(destinationIata) ? null : getAirportCode(destinationIata);
+		
+		if (airlines == null) airlines = new ArrayList<String>();
+		
+		StopWatch sw = StopWatch.AutoStart();
+		//step#1: collect transitId if any
+		StringBuffer queryTransitId = new StringBuffer("SELECT A.flightavailID")
+			.append(" FROM FLIGHTAVAILSEAT_CLEAN A JOIN FLIGHT_CLASS_FARE_CITILINK B ON A.FLIGHTAVAILID = B.FLIGHTAVAILID")
+			.append(" WHERE (A.ISTRANSIT = 1)")
+			.append(_origin == null ? "" : " and UPPER(ORIGIN)=UPPER(:origin)")
+			.append(_destinationIata == null ? "" : " and UPPER(DESTINATION)=UPPER(:destination)")
+			.append(" AND TRUNC (DEP_TIME) = TO_DATE (:departDate, 'DD/MM/YYYY')")
+			.append(searchPast ? "" : " AND DEP_TIME > SYSDATE + (2 / 24)")
+			//.append(((airlines.size() < 1) ? "" : " and A.AIRLINE in (:airlines)"))// bisa beda pesawat, seperti wingsair ke lionair
+			.append(" GROUP BY A.flightavailID")
+		;
+		
+		SQLQuery sqlTransits = getSession().createSQLQuery(queryTransitId.toString());
+		
+		sqlTransits.setParameter("departDate", _departDate);			
+		if (_origin != null) {
+			sqlTransits.setParameter("origin", _origin);
+		}
+		
+		if (_destinationIata != null) {
+			sqlTransits.setParameter("destination", _destinationIata);
+		}
+		
+		List<?> transits = sqlTransits.list();
+		
+		System.err.println("q1.citilink=" + transits.size() + " rows, " + sw.stopAndGetAsString());
+	
+		sw.start();
+		//step#2: check if this query match with transits
+		StringBuffer sGroupB = new StringBuffer("SELECT A.flightavailID, A.FLIGHTNUM AS FLIGHT_NUMBER, A.ORIGIN, A.DESTINATION,A.DEPARTURE,A.ARRIVAL,")
+			.append("TO_CHAR (A.DEP_TIME, 'DD/MM/YYYY HH24:MI:SS A.M.') AS DEPARTURE_TIME,")
+			.append("TO_CHAR (A.ARR_TIME, 'DD/MM/YYYY HH24:MI:SS A.M.') AS ARRIVAL_TIME,")
+			.append("A.AIRLINE AS AIRLINE, A.ISTRANSIT, A.TRANSITID,A.UPDATECODE,")
+			.append("TO_CHAR (A.CREATED_DATE, 'DD/MM/YYYY HH24:MI:SS A.M.') AS CREATED_DATE,")
+			.append("listagg (B.class_name, ',') WITHIN GROUP (ORDER BY B.class_sequence) Class_Seat,")
+			.append("listagg (B.class_rate, ',') WITHIN GROUP (ORDER BY B.class_sequence) Class_Rate,")
+			.append("listagg (B.class_avail_seat, ',') WITHIN GROUP (ORDER BY B.class_sequence) Class_Avail_Seat,")
+			.append("listagg (B.radio_id, ',') WITHIN GROUP (ORDER BY B.class_sequence) Radio_ID")
+			.append(" FROM FLIGHTAVAILSEAT_CLEAN A JOIN FLIGHT_CLASS_FARE_CITILINK B ON A.FLIGHTAVAILID = B.FLIGHTAVAILID")
+			.append(" WHERE (A.ISTRANSIT = 2 OR A.ISTRANSIT = 3)")
+			.append(_origin == null ? "" : " and UPPER(ORIGIN)=UPPER(:origin)")
+			.append(_destinationIata == null ? "" : " and UPPER(DESTINATION)=UPPER(:destination)")
+			//.append(" AND TRUNC (DEP_TIME) = TO_DATE (:departDate, 'DD/MM/YYYY')")	//karena bisa saja abis transit, hari udah pindah
+			//.append(searchPast ? "" : " AND DEP_TIME > SYSDATE + (2 / 24)")	//idem
+			.append(transits.size() < 1 ? "" : " and A.TRANSITID IN (:transits)")
+//			.append((airlines.size() < 1) ? "" : " and A.AIRLINE in (:airlines)")	//bisa beda pswt stlh transit
+			.append(" GROUP BY A.flightavailID,A.FLIGHTNUM,A.ORIGIN,A.DESTINATION,A.DEPARTURE, A.ARRIVAL, A.DEP_TIME,A.ARR_TIME,a.airline,A.ISTRANSIT,A.TRANSITID,A.UPDATECODE,A.CREATED_DATE")
+		;
+		
+		SQLQuery sqlGroupB = getSession().createSQLQuery(sGroupB.toString());
+
+		if (_origin != null) {
+			sqlGroupB.setParameter("origin", _origin);
+		}
+		
+		if (_destinationIata != null) {
+			sqlGroupB.setParameter("destination", _destinationIata);
+		}
+		
+		if (transits.size() > 0) {
+			sqlGroupB.setParameterList("transits", transits);
+		}
+		List<?> groupB = sqlGroupB.list();
+
+		System.err.println("q2.citilink=" + groupB.size() + " rows, " + sw.stopAndGetAsString());		
+		
+		sw.start();
+		//step#3: combine GroupA and groupB
+		StringBuffer sGroupA = new StringBuffer("SELECT A.flightavailID,A.FLIGHTNUM AS FLIGHT_NUMBER,A.ORIGIN,A.DESTINATION,A.DEPARTURE,A.ARRIVAL,")
+			.append("TO_CHAR (A.DEP_TIME, 'DD/MM/YYYY HH24:MI:SS A.M.') AS DEPARTURE_TIME,")
+			.append("TO_CHAR (A.ARR_TIME, 'DD/MM/YYYY HH24:MI:SS A.M.') AS ARRIVAL_TIME,")
+			.append("A.AIRLINE AS AIRLINE,A.ISTRANSIT,A.TRANSITID,A.UPDATECODE,")
+			.append("TO_CHAR (A.CREATED_DATE, 'DD/MM/YYYY HH24:MI:SS A.M.') AS CREATED_DATE,")
+			.append("listagg (B.class_name, ',') WITHIN GROUP (ORDER BY B.class_sequence) Class_Seat,")
+			.append("listagg (B.class_rate, ',') WITHIN GROUP (ORDER BY B.class_sequence) Class_Rate,")
+			.append("listagg (B.class_avail_seat, ',') WITHIN GROUP (ORDER BY B.class_sequence) Class_Avail_Seat,")
+			.append("listagg (B.radio_id, ',') WITHIN GROUP (ORDER BY B.class_sequence) Radio_ID")
+			.append(" FROM FLIGHTAVAILSEAT_CLEAN A JOIN FLIGHT_CLASS_FARE_CITILINK B ON A.FLIGHTAVAILID = B.FLIGHTAVAILID")
+			.append(" WHERE 1=1")//(A.ISTRANSIT = 0 OR A.ISTRANSIT = 1)")
+			.append(_origin == null ? "" : " and UPPER(ORIGIN)=UPPER(:origin)")
+			.append(_destinationIata == null ? "" : " and UPPER(DESTINATION)=UPPER(:destination)")
+			.append(" AND TRUNC (DEP_TIME) = TO_DATE (:departDate, 'DD/MM/YYYY')")
+			.append(searchPast ? "" : " AND DEP_TIME > SYSDATE + (2 / 24)")
+			.append(((airlines.size() < 1) ? "" : " and A.AIRLINE in (:airlines)"))
+			.append(" GROUP BY A.flightavailID, A.FLIGHTNUM, A.ORIGIN, A.DESTINATION, A.DEPARTURE, A.ARRIVAL, A.DEP_TIME, A.ARR_TIME, A.AIRLINE, A.ISTRANSIT, A.TRANSITID,A.UPDATECODE,A.CREATED_DATE")						
+		;
+				
+		SQLQuery sqlGroupNonTransit = getSession().createSQLQuery(sGroupA.toString());
+	
+		sqlGroupNonTransit.setParameter("departDate", _departDate);			
+		if (_origin != null) {
+			sqlGroupNonTransit.setParameter("origin", _origin);
+		}
+		
+		if (_destinationIata != null) {
+			sqlGroupNonTransit.setParameter("destination", _destinationIata);
+		}
+		
+		if (airlines.size() > 0) {
+			sqlGroupNonTransit.setParameterList("airlines", airlines);
+		}
+
+		List<?> groupNonTransit = sqlGroupNonTransit.list();
+
+		System.err.println("q3.citilink=" + groupNonTransit.size() + " rows, " + sw.stopAndGetAsString());
+		
+		List<?> groupAB = ListUtils.union(groupNonTransit, groupB);
+		
+		List<FlightSearchB2B> lists = new ArrayList<FlightSearchB2B>();
+		for (Iterator iterator = groupAB.iterator(); iterator.hasNext();) {
+			Object[] obj = (Object[]) iterator.next();
+
+			//just add it, will clean it later
+			lists.add(convertObjectColumnsToBean(obj));
+		}
+
+		return cleanList(lists);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	@Deprecated
+	@Override
+	public List<FlightSearchB2B> searchOneWayFlightB2BXpress(Date departDate, String departIata,
+			String destinationIata, List<String> airlines, boolean searchPast) {
+		if (departDate == null) departDate = new Date();
+		String _departDate = new SimpleDateFormat("dd/MM/yyyy").format(departDate);
+		String _origin = StringUtils.isEmpty(departIata) ? null : getAirportCode(departIata);
+		String _destinationIata = StringUtils.isEmpty(destinationIata) ? null : getAirportCode(destinationIata);
+		
+		if (airlines == null) airlines = new ArrayList<String>();
+		
+		StopWatch sw = StopWatch.AutoStart();
+		//step#1: collect transitId if any
+		StringBuffer queryTransitId = new StringBuffer("SELECT A.flightavailID")
+		.append(" FROM FLIGHTAVAILSEAT_CLEAN A JOIN FLIGHT_CLASS_FARE_XPRESS B ON A.FLIGHTAVAILID = B.FLIGHTAVAILID")
+		.append(" WHERE (A.ISTRANSIT = 1)")
+		.append(_origin == null ? "" : " and UPPER(ORIGIN)=UPPER(:origin)")
+		.append(_destinationIata == null ? "" : " and UPPER(DESTINATION)=UPPER(:destination)")
+		.append(" AND TRUNC (DEP_TIME) = TO_DATE (:departDate, 'DD/MM/YYYY')")
+		.append(searchPast ? "" : " AND DEP_TIME > SYSDATE + (2 / 24)")
+		//.append(((airlines.size() < 1) ? "" : " and A.AIRLINE in (:airlines)"))// bisa beda pesawat, seperti wingsair ke lionair
+		.append(" GROUP BY A.flightavailID")
+		;
+		
+		SQLQuery sqlTransits = getSession().createSQLQuery(queryTransitId.toString());
+		
+		sqlTransits.setParameter("departDate", _departDate);			
+		if (_origin != null) {
+			sqlTransits.setParameter("origin", _origin);
+		}
+		
+		if (_destinationIata != null) {
+			sqlTransits.setParameter("destination", _destinationIata);
+		}
+		
+		List<?> transits = sqlTransits.list();
+		
+		System.err.println("q1.citilink=" + transits.size() + " rows, " + sw.stopAndGetAsString());
+		
+		sw.start();
+		//step#2: check if this query match with transits
+		StringBuffer sGroupB = new StringBuffer("SELECT A.flightavailID, A.FLIGHTNUM AS FLIGHT_NUMBER, A.ORIGIN, A.DESTINATION,A.DEPARTURE,A.ARRIVAL,")
+		.append("TO_CHAR (A.DEP_TIME, 'DD/MM/YYYY HH24:MI:SS A.M.') AS DEPARTURE_TIME,")
+		.append("TO_CHAR (A.ARR_TIME, 'DD/MM/YYYY HH24:MI:SS A.M.') AS ARRIVAL_TIME,")
+		.append("A.AIRLINE AS AIRLINE, A.ISTRANSIT, A.TRANSITID,A.UPDATECODE,")
+		.append("TO_CHAR (A.CREATED_DATE, 'DD/MM/YYYY HH24:MI:SS A.M.') AS CREATED_DATE,")
+		.append("listagg (B.class_name, ',') WITHIN GROUP (ORDER BY B.class_sequence) Class_Seat,")
+		.append("listagg (B.class_rate, ',') WITHIN GROUP (ORDER BY B.class_sequence) Class_Rate,")
+		.append("listagg (B.class_avail_seat, ',') WITHIN GROUP (ORDER BY B.class_sequence) Class_Avail_Seat,")
+		.append("listagg (B.radio_id, ',') WITHIN GROUP (ORDER BY B.class_sequence) Radio_ID")
+		.append(" FROM FLIGHTAVAILSEAT_CLEAN A JOIN FLIGHT_CLASS_FARE_XPRESS B ON A.FLIGHTAVAILID = B.FLIGHTAVAILID")
+		.append(" WHERE (A.ISTRANSIT = 2 OR A.ISTRANSIT = 3)")
+		.append(_origin == null ? "" : " and UPPER(ORIGIN)=UPPER(:origin)")
+		.append(_destinationIata == null ? "" : " and UPPER(DESTINATION)=UPPER(:destination)")
+		//.append(" AND TRUNC (DEP_TIME) = TO_DATE (:departDate, 'DD/MM/YYYY')")	//karena bisa saja abis transit, hari udah pindah
+		//.append(searchPast ? "" : " AND DEP_TIME > SYSDATE + (2 / 24)")	//idem
+		.append(transits.size() < 1 ? "" : " and A.TRANSITID IN (:transits)")
+//			.append((airlines.size() < 1) ? "" : " and A.AIRLINE in (:airlines)")	//bisa beda pswt stlh transit
+		.append(" GROUP BY A.flightavailID,A.FLIGHTNUM,A.ORIGIN,A.DESTINATION,A.DEPARTURE, A.ARRIVAL, A.DEP_TIME,A.ARR_TIME,a.airline,A.ISTRANSIT,A.TRANSITID,A.UPDATECODE,A.CREATED_DATE")
+		;
+		
+		SQLQuery sqlGroupB = getSession().createSQLQuery(sGroupB.toString());
+		
+		if (_origin != null) {
+			sqlGroupB.setParameter("origin", _origin);
+		}
+		
+		if (_destinationIata != null) {
+			sqlGroupB.setParameter("destination", _destinationIata);
+		}
+		
+		if (transits.size() > 0) {
+			sqlGroupB.setParameterList("transits", transits);
+		}
+		List<?> groupB = sqlGroupB.list();
+		
+		System.err.println("q2.citilink=" + groupB.size() + " rows, " + sw.stopAndGetAsString());		
+		
+		sw.start();
+		//step#3: combine GroupA and groupB
+		StringBuffer sGroupA = new StringBuffer("SELECT A.flightavailID,A.FLIGHTNUM AS FLIGHT_NUMBER,A.ORIGIN,A.DESTINATION,A.DEPARTURE,A.ARRIVAL,")
+		.append("TO_CHAR (A.DEP_TIME, 'DD/MM/YYYY HH24:MI:SS A.M.') AS DEPARTURE_TIME,")
+		.append("TO_CHAR (A.ARR_TIME, 'DD/MM/YYYY HH24:MI:SS A.M.') AS ARRIVAL_TIME,")
+		.append("A.AIRLINE AS AIRLINE,A.ISTRANSIT,A.TRANSITID,A.UPDATECODE,")
+		.append("TO_CHAR (A.CREATED_DATE, 'DD/MM/YYYY HH24:MI:SS A.M.') AS CREATED_DATE,")
+		.append("listagg (B.class_name, ',') WITHIN GROUP (ORDER BY B.class_sequence) Class_Seat,")
+		.append("listagg (B.class_rate, ',') WITHIN GROUP (ORDER BY B.class_sequence) Class_Rate,")
+		.append("listagg (B.class_avail_seat, ',') WITHIN GROUP (ORDER BY B.class_sequence) Class_Avail_Seat,")
+		.append("listagg (B.radio_id, ',') WITHIN GROUP (ORDER BY B.class_sequence) Radio_ID")
+		.append(" FROM FLIGHTAVAILSEAT_CLEAN A JOIN FLIGHT_CLASS_FARE_XPRESS B ON A.FLIGHTAVAILID = B.FLIGHTAVAILID")
+		.append(" WHERE 1=1")//(A.ISTRANSIT = 0 OR A.ISTRANSIT = 1)")
+		.append(_origin == null ? "" : " and UPPER(ORIGIN)=UPPER(:origin)")
+		.append(_destinationIata == null ? "" : " and UPPER(DESTINATION)=UPPER(:destination)")
+		.append(" AND TRUNC (DEP_TIME) = TO_DATE (:departDate, 'DD/MM/YYYY')")
+		.append(searchPast ? "" : " AND DEP_TIME > SYSDATE + (2 / 24)")
+		.append(((airlines.size() < 1) ? "" : " and A.AIRLINE in (:airlines)"))
+		.append(" GROUP BY A.flightavailID, A.FLIGHTNUM, A.ORIGIN, A.DESTINATION, A.DEPARTURE, A.ARRIVAL, A.DEP_TIME, A.ARR_TIME, A.AIRLINE, A.ISTRANSIT, A.TRANSITID,A.UPDATECODE,A.CREATED_DATE")						
+		;
+		
+		SQLQuery sqlGroupNonTransit = getSession().createSQLQuery(sGroupA.toString());
+		
+		sqlGroupNonTransit.setParameter("departDate", _departDate);			
+		if (_origin != null) {
+			sqlGroupNonTransit.setParameter("origin", _origin);
+		}
+		
+		if (_destinationIata != null) {
+			sqlGroupNonTransit.setParameter("destination", _destinationIata);
+		}
+		
+		if (airlines.size() > 0) {
+			sqlGroupNonTransit.setParameterList("airlines", airlines);
+		}
+		
+		List<?> groupNonTransit = sqlGroupNonTransit.list();
+		
+		System.err.println("q3.citilink=" + groupNonTransit.size() + " rows, " + sw.stopAndGetAsString());
+		
+		List<?> groupAB = ListUtils.union(groupNonTransit, groupB);
+		
+		List<FlightSearchB2B> lists = new ArrayList<FlightSearchB2B>();
+		for (Iterator iterator = groupAB.iterator(); iterator.hasNext();) {
+			Object[] obj = (Object[]) iterator.next();
+			
+			//just add it, will clean it later
+			lists.add(convertObjectColumnsToBean(obj));
+		}
+		
+		return cleanList(lists);
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Deprecated
+	@Override
+	public List<FlightSearchB2B> searchOneWayFlightB2BGaruda(Date departDate, String departIata,
+			String destinationIata, List<String> airlines, boolean searchPast) {
+		if (departDate == null) departDate = new Date();
+		String _departDate = new SimpleDateFormat("dd/MM/yyyy").format(departDate);
+		String _origin = StringUtils.isEmpty(departIata) ? null : getAirportCode(departIata);
+		String _destinationIata = StringUtils.isEmpty(destinationIata) ? null : getAirportCode(destinationIata);
+		
+		if (airlines == null) airlines = new ArrayList<String>();
+		
+		StopWatch sw = StopWatch.AutoStart();
+		//step#1: collect transitId if any
+		StringBuffer queryTransitId = new StringBuffer("SELECT A.flightavailID")
+		.append(" FROM FLIGHTAVAILSEAT_CLEAN A JOIN FLIGHT_CLASS_FARE_GARUDA B ON A.FLIGHTAVAILID = B.FLIGHTAVAILID")
+		.append(" WHERE (A.ISTRANSIT = 1)")
+		.append(_origin == null ? "" : " and UPPER(ORIGIN)=UPPER(:origin)")
+		.append(_destinationIata == null ? "" : " and UPPER(DESTINATION)=UPPER(:destination)")
+		.append(" AND TRUNC (DEP_TIME) = TO_DATE (:departDate, 'DD/MM/YYYY')")
+		.append(searchPast ? "" : " AND DEP_TIME > SYSDATE + (2 / 24)")
+		//.append(((airlines.size() < 1) ? "" : " and A.AIRLINE in (:airlines)"))// bisa beda pesawat, seperti wingsair ke lionair
+		.append(" GROUP BY A.flightavailID")
+		;
+		
+		SQLQuery sqlTransits = getSession().createSQLQuery(queryTransitId.toString());
+		
+		sqlTransits.setParameter("departDate", _departDate);			
+		if (_origin != null) {
+			sqlTransits.setParameter("origin", _origin);
+		}
+		
+		if (_destinationIata != null) {
+			sqlTransits.setParameter("destination", _destinationIata);
+		}
+		
+		List<?> transits = sqlTransits.list();
+		
+		System.err.println("q1.citilink=" + transits.size() + " rows, " + sw.stopAndGetAsString());
+		
+		sw.start();
+		//step#2: check if this query match with transits
+		StringBuffer sGroupB = new StringBuffer("SELECT A.flightavailID, A.FLIGHTNUM AS FLIGHT_NUMBER, A.ORIGIN, A.DESTINATION,A.DEPARTURE,A.ARRIVAL,")
+		.append("TO_CHAR (A.DEP_TIME, 'DD/MM/YYYY HH24:MI:SS A.M.') AS DEPARTURE_TIME,")
+		.append("TO_CHAR (A.ARR_TIME, 'DD/MM/YYYY HH24:MI:SS A.M.') AS ARRIVAL_TIME,")
+		.append("A.AIRLINE AS AIRLINE, A.ISTRANSIT, A.TRANSITID,A.UPDATECODE,")
+		.append("TO_CHAR (A.CREATED_DATE, 'DD/MM/YYYY HH24:MI:SS A.M.') AS CREATED_DATE,")
+		.append("listagg (B.class_name, ',') WITHIN GROUP (ORDER BY B.class_sequence) Class_Seat,")
+		.append("listagg (B.class_rate, ',') WITHIN GROUP (ORDER BY B.class_sequence) Class_Rate,")
+		.append("listagg (B.class_avail_seat, ',') WITHIN GROUP (ORDER BY B.class_sequence) Class_Avail_Seat,")
+		.append("listagg (B.radio_id, ',') WITHIN GROUP (ORDER BY B.class_sequence) Radio_ID")
+		.append(" FROM FLIGHTAVAILSEAT_CLEAN A JOIN FLIGHT_CLASS_FARE_GARUDA B ON A.FLIGHTAVAILID = B.FLIGHTAVAILID")
+		.append(" WHERE (A.ISTRANSIT = 2 OR A.ISTRANSIT = 3)")
+		.append(_origin == null ? "" : " and UPPER(ORIGIN)=UPPER(:origin)")
+		.append(_destinationIata == null ? "" : " and UPPER(DESTINATION)=UPPER(:destination)")
+		//.append(" AND TRUNC (DEP_TIME) = TO_DATE (:departDate, 'DD/MM/YYYY')")	//karena bisa saja abis transit, hari udah pindah
+		//.append(searchPast ? "" : " AND DEP_TIME > SYSDATE + (2 / 24)")	//idem
+		.append(transits.size() < 1 ? "" : " and A.TRANSITID IN (:transits)")
+//			.append((airlines.size() < 1) ? "" : " and A.AIRLINE in (:airlines)")	//bisa beda pswt stlh transit
+		.append(" GROUP BY A.flightavailID,A.FLIGHTNUM,A.ORIGIN,A.DESTINATION,A.DEPARTURE, A.ARRIVAL, A.DEP_TIME,A.ARR_TIME,a.airline,A.ISTRANSIT,A.TRANSITID,A.UPDATECODE,A.CREATED_DATE")
+		;
+		
+		SQLQuery sqlGroupB = getSession().createSQLQuery(sGroupB.toString());
+		
+		if (_origin != null) {
+			sqlGroupB.setParameter("origin", _origin);
+		}
+		
+		if (_destinationIata != null) {
+			sqlGroupB.setParameter("destination", _destinationIata);
+		}
+		
+		if (transits.size() > 0) {
+			sqlGroupB.setParameterList("transits", transits);
+		}
+		List<?> groupB = sqlGroupB.list();
+		
+		System.err.println("q2.citilink=" + groupB.size() + " rows, " + sw.stopAndGetAsString());		
+		
+		sw.start();
+		//step#3: combine GroupA and groupB
+		StringBuffer sGroupA = new StringBuffer("SELECT A.flightavailID,A.FLIGHTNUM AS FLIGHT_NUMBER,A.ORIGIN,A.DESTINATION,A.DEPARTURE,A.ARRIVAL,")
+		.append("TO_CHAR (A.DEP_TIME, 'DD/MM/YYYY HH24:MI:SS A.M.') AS DEPARTURE_TIME,")
+		.append("TO_CHAR (A.ARR_TIME, 'DD/MM/YYYY HH24:MI:SS A.M.') AS ARRIVAL_TIME,")
+		.append("A.AIRLINE AS AIRLINE,A.ISTRANSIT,A.TRANSITID,A.UPDATECODE,")
+		.append("TO_CHAR (A.CREATED_DATE, 'DD/MM/YYYY HH24:MI:SS A.M.') AS CREATED_DATE,")
+		.append("listagg (B.class_name, ',') WITHIN GROUP (ORDER BY B.class_sequence) Class_Seat,")
+		.append("listagg (B.class_rate, ',') WITHIN GROUP (ORDER BY B.class_sequence) Class_Rate,")
+		.append("listagg (B.class_avail_seat, ',') WITHIN GROUP (ORDER BY B.class_sequence) Class_Avail_Seat,")
+		.append("listagg (B.radio_id, ',') WITHIN GROUP (ORDER BY B.class_sequence) Radio_ID")
+		.append(" FROM FLIGHTAVAILSEAT_CLEAN A JOIN FLIGHT_CLASS_FARE_GARUDA B ON A.FLIGHTAVAILID = B.FLIGHTAVAILID")
+		.append(" WHERE 1=1")//(A.ISTRANSIT = 0 OR A.ISTRANSIT = 1)")
+		.append(_origin == null ? "" : " and UPPER(ORIGIN)=UPPER(:origin)")
+		.append(_destinationIata == null ? "" : " and UPPER(DESTINATION)=UPPER(:destination)")
+		.append(" AND TRUNC (DEP_TIME) = TO_DATE (:departDate, 'DD/MM/YYYY')")
+		.append(searchPast ? "" : " AND DEP_TIME > SYSDATE + (2 / 24)")
+		.append(((airlines.size() < 1) ? "" : " and A.AIRLINE in (:airlines)"))
+		.append(" GROUP BY A.flightavailID, A.FLIGHTNUM, A.ORIGIN, A.DESTINATION, A.DEPARTURE, A.ARRIVAL, A.DEP_TIME, A.ARR_TIME, A.AIRLINE, A.ISTRANSIT, A.TRANSITID,A.UPDATECODE,A.CREATED_DATE")						
+		;
+		
+		SQLQuery sqlGroupNonTransit = getSession().createSQLQuery(sGroupA.toString());
+		
+		sqlGroupNonTransit.setParameter("departDate", _departDate);			
+		if (_origin != null) {
+			sqlGroupNonTransit.setParameter("origin", _origin);
+		}
+		
+		if (_destinationIata != null) {
+			sqlGroupNonTransit.setParameter("destination", _destinationIata);
+		}
+		
+		if (airlines.size() > 0) {
+			sqlGroupNonTransit.setParameterList("airlines", airlines);
+		}
+		
+		List<?> groupNonTransit = sqlGroupNonTransit.list();
+		
+		System.err.println("q3.citilink=" + groupNonTransit.size() + " rows, " + sw.stopAndGetAsString());
+		
+		List<?> groupAB = ListUtils.union(groupNonTransit, groupB);
+		
+		List<FlightSearchB2B> lists = new ArrayList<FlightSearchB2B>();
+		for (Iterator iterator = groupAB.iterator(); iterator.hasNext();) {
+			Object[] obj = (Object[]) iterator.next();
+			
+			//just add it, will clean it later
+			lists.add(convertObjectColumnsToBean(obj));
+		}
+		
+		return cleanList(lists);
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Deprecated
+	@Override
+	public List<FlightSearchB2B> searchOneWayFlightB2BKalstar(Date departDate, String departIata,
+			String destinationIata, List<String> airlines, boolean searchPast) {
+		if (departDate == null) departDate = new Date();
+		String _departDate = new SimpleDateFormat("dd/MM/yyyy").format(departDate);
+		String _origin = StringUtils.isEmpty(departIata) ? null : getAirportCode(departIata);
+		String _destinationIata = StringUtils.isEmpty(destinationIata) ? null : getAirportCode(destinationIata);
+		
+		if (airlines == null) airlines = new ArrayList<String>();
+		
+		StopWatch sw = StopWatch.AutoStart();
+		//step#1: collect transitId if any
+		StringBuffer queryTransitId = new StringBuffer("SELECT A.flightavailID")
+			.append(" FROM FLIGHTAVAILSEAT_CLEAN A JOIN FLIGHT_CLASS_FARE_KALSTAR B ON A.FLIGHTAVAILID = B.FLIGHTAVAILID")
+			.append(" WHERE (A.ISTRANSIT = 1)")
+			.append(_origin == null ? "" : " and UPPER(ORIGIN)=UPPER(:origin)")
+			.append(_destinationIata == null ? "" : " and UPPER(DESTINATION)=UPPER(:destination)")
+			.append(" AND TRUNC (DEP_TIME) = TO_DATE (:departDate, 'DD/MM/YYYY')")
+			.append(searchPast ? "" : " AND DEP_TIME > SYSDATE + (2 / 24)")
+			//.append(((airlines.size() < 1) ? "" : " and A.AIRLINE in (:airlines)"))// bisa beda pesawat, seperti wingsair ke lionair
+			.append(" GROUP BY A.flightavailID")
+		;
+		
+		SQLQuery sqlTransits = getSession().createSQLQuery(queryTransitId.toString());
+		
+		sqlTransits.setParameter("departDate", _departDate);			
+		if (_origin != null) {
+			sqlTransits.setParameter("origin", _origin);
+		}
+		
+		if (_destinationIata != null) {
+			sqlTransits.setParameter("destination", _destinationIata);
+		}
+		
+		List<?> transits = sqlTransits.list();
+		
+		System.err.println("q1.kalstar=" + transits.size() + " rows, " + sw.stopAndGetAsString());
+	
+		sw.start();
+		//step#2: check if this query match with transits
+		StringBuffer sGroupB = new StringBuffer("SELECT A.flightavailID, A.FLIGHTNUM AS FLIGHT_NUMBER, A.ORIGIN, A.DESTINATION,A.DEPARTURE,A.ARRIVAL,")
+			.append("TO_CHAR (A.DEP_TIME, 'DD/MM/YYYY HH24:MI:SS A.M.') AS DEPARTURE_TIME,")
+			.append("TO_CHAR (A.ARR_TIME, 'DD/MM/YYYY HH24:MI:SS A.M.') AS ARRIVAL_TIME,")
+			.append("A.AIRLINE AS AIRLINE, A.ISTRANSIT, A.TRANSITID,A.UPDATECODE,")
+			.append("TO_CHAR (A.CREATED_DATE, 'DD/MM/YYYY HH24:MI:SS A.M.') AS CREATED_DATE,")
+			.append("listagg (B.class_name, ',') WITHIN GROUP (ORDER BY B.class_sequence) Class_Seat,")
+			.append("listagg (B.class_rate, ',') WITHIN GROUP (ORDER BY B.class_sequence) Class_Rate,")
+			.append("listagg (B.class_avail_seat, ',') WITHIN GROUP (ORDER BY B.class_sequence) Class_Avail_Seat,")
+			.append("listagg (B.radio_id, ',') WITHIN GROUP (ORDER BY B.class_sequence) Radio_ID")
+			.append(" FROM FLIGHTAVAILSEAT_CLEAN A JOIN FLIGHT_CLASS_FARE_KALSTAR B ON A.FLIGHTAVAILID = B.FLIGHTAVAILID")
+			.append(" WHERE (A.ISTRANSIT = 2 OR A.ISTRANSIT = 3)")
+			.append(_origin == null ? "" : " and UPPER(ORIGIN)=UPPER(:origin)")
+			.append(_destinationIata == null ? "" : " and UPPER(DESTINATION)=UPPER(:destination)")
+			//.append(" AND TRUNC (DEP_TIME) = TO_DATE (:departDate, 'DD/MM/YYYY')")	//karena bisa saja abis transit, hari udah pindah
+			//.append(searchPast ? "" : " AND DEP_TIME > SYSDATE + (2 / 24)")	//idem
+			.append(transits.size() < 1 ? "" : " and A.TRANSITID IN (:transits)")
+//			.append((airlines.size() < 1) ? "" : " and A.AIRLINE in (:airlines)")	//bisa beda pswt stlh transit
+			.append(" GROUP BY A.flightavailID,A.FLIGHTNUM,A.ORIGIN,A.DESTINATION,A.DEPARTURE, A.ARRIVAL, A.DEP_TIME,A.ARR_TIME,a.airline,A.ISTRANSIT,A.TRANSITID,A.UPDATECODE,A.CREATED_DATE")
+		;
+		
+		SQLQuery sqlGroupB = getSession().createSQLQuery(sGroupB.toString());
+
+		if (_origin != null) {
+			sqlGroupB.setParameter("origin", _origin);
+		}
+		
+		if (_destinationIata != null) {
+			sqlGroupB.setParameter("destination", _destinationIata);
+		}
+		
+		if (transits.size() > 0) {
+			sqlGroupB.setParameterList("transits", transits);
+		}
+		List<?> groupB = sqlGroupB.list();
+
+		System.err.println("q2.kalstar=" + groupB.size() + " rows, " + sw.stopAndGetAsString());		
+		
+		sw.start();
+		//step#3: combine GroupA and groupB
+		StringBuffer sGroupA = new StringBuffer("SELECT A.flightavailID,A.FLIGHTNUM AS FLIGHT_NUMBER,A.ORIGIN,A.DESTINATION,A.DEPARTURE,A.ARRIVAL,")
+			.append("TO_CHAR (A.DEP_TIME, 'DD/MM/YYYY HH24:MI:SS A.M.') AS DEPARTURE_TIME,")
+			.append("TO_CHAR (A.ARR_TIME, 'DD/MM/YYYY HH24:MI:SS A.M.') AS ARRIVAL_TIME,")
+			.append("A.AIRLINE AS AIRLINE,A.ISTRANSIT,A.TRANSITID,A.UPDATECODE,")
+			.append("TO_CHAR (A.CREATED_DATE, 'DD/MM/YYYY HH24:MI:SS A.M.') AS CREATED_DATE,")
+			.append("listagg (B.class_name, ',') WITHIN GROUP (ORDER BY B.class_sequence) Class_Seat,")
+			.append("listagg (B.class_rate, ',') WITHIN GROUP (ORDER BY B.class_sequence) Class_Rate,")
+			.append("listagg (B.class_avail_seat, ',') WITHIN GROUP (ORDER BY B.class_sequence) Class_Avail_Seat,")
+			.append("listagg (B.radio_id, ',') WITHIN GROUP (ORDER BY B.class_sequence) Radio_ID")
+			.append(" FROM FLIGHTAVAILSEAT_CLEAN A JOIN FLIGHT_CLASS_FARE_KALSTAR B ON A.FLIGHTAVAILID = B.FLIGHTAVAILID")
+			.append(" WHERE (A.ISTRANSIT = 0 OR A.ISTRANSIT = 1)")
+			.append(_origin == null ? "" : " and UPPER(ORIGIN)=UPPER(:origin)")
+			.append(_destinationIata == null ? "" : " and UPPER(DESTINATION)=UPPER(:destination)")
+			.append(" AND TRUNC (DEP_TIME) = TO_DATE (:departDate, 'DD/MM/YYYY')")
+			.append(searchPast ? "" : " AND DEP_TIME > SYSDATE + (2 / 24)")
+			.append(((airlines.size() < 1) ? "" : " and A.AIRLINE in (:airlines)"))
+			.append(" GROUP BY A.flightavailID, A.FLIGHTNUM, A.ORIGIN, A.DESTINATION, A.DEPARTURE, A.ARRIVAL, A.DEP_TIME, A.ARR_TIME, A.AIRLINE, A.ISTRANSIT, A.TRANSITID,A.UPDATECODE,A.CREATED_DATE")						
+		;
+				
+		SQLQuery sqlGroupNonTransit = getSession().createSQLQuery(sGroupA.toString());
+	
+		sqlGroupNonTransit.setParameter("departDate", _departDate);			
+		if (_origin != null) {
+			sqlGroupNonTransit.setParameter("origin", _origin);
+		}
+		
+		if (_destinationIata != null) {
+			sqlGroupNonTransit.setParameter("destination", _destinationIata);
+		}
+		
+		if (airlines.size() > 0) {
+			sqlGroupNonTransit.setParameterList("airlines", airlines);
+		}
+
+		List<?> groupNonTransit = sqlGroupNonTransit.list();
+
+		System.err.println("q3.kalstar=" + groupNonTransit.size() + " rows, " + sw.stopAndGetAsString());
+		
+		List<?> groupAB = ListUtils.union(groupNonTransit, groupB);
+		
+		List<FlightSearchB2B> lists = new ArrayList<FlightSearchB2B>();
+		for (Iterator iterator = groupAB.iterator(); iterator.hasNext();) {
+			Object[] obj = (Object[]) iterator.next();
+
+			//just add it, will clean it later
+			lists.add(convertObjectColumnsToBean(obj));
+		}
+
+		return cleanList(lists);
+	}
+	
+      
+      
+
+dipakai di airlineRoutes.jsp. karena country sudah tidak boleh dipakai diganti menjadi countryId      
+        <display:column property="route.from.country.country_name" escapeXml="true" sortable="true" titleKey="airport.country" 
+                        media="all" style="font-size: small">
+	<c:choose>
+        		<c:when test="${route.from.country.country_name == route.to.country.country_name}">
+		            <c:out value="${route.from.country.country_name}"/>
+        		</c:when>
+        		<c:otherwise>
+		            <c:out value="${route.from.country.country_name} - ${route.to.country.country_name}"/>
+        		</c:otherwise>
+        </c:choose>
+		</display:column>         

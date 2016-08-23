@@ -1,0 +1,26 @@
+Dear ${agent.agent_Name},
+
+Following are your Account information:
+
+ 
+Virtual Account: ${topup.VAN}
+Bank Code: ${topup.bankCodeVA} ${bankName}
+Minimum Top Up: ${topup.minimum} ${topup.currency}
+Outstanding: ${topup.outstanding} ${topup.currency}
+Balance: ${topup.balance} ${topup.currency}
+
+
+Please feel free to Top Up at any time without expiring.
+
+Best Regards,
+
+Berleha Agency Network
+Ruko Rodeo Blok C 20
+Jl. Boulevard Gading SErpong
+Tangerang, 15810
+021-6899-8398
+
+
+Pesan ini dikirim ke email Anda karena Anda mengakses menu Top Up melalui ${applicationURL}.
+Mohon untuk tidak me-reply email ini.
+Terima Kasih.

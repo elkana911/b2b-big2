@@ -1,0 +1,13 @@
+
+
+
+syarat topup adalah kelipatan 500rb
+
+Jika kelipatan 500rb diambil, bagaimana balance terakhir yg bisa berlaku ?
+misal balance terakhir 430rb, apakah bisa transaksi ?
+
+bagaimana menangani promo ?
+
+
+
+

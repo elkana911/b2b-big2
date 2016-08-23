@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<!-- NOTE: If you're working offline, you might have to change the DOCTYPE to the following:
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">-->
+<hibernate-configuration>
+ <session-factory>
+  <mapping class="com.big.web.b2b_big2.audit.CustomRevInfoEntity"/>
+ 
+  <mapping class="com.big.web.b2b_big2.mgmt.model.TaskVO"/>
+  
+  <mapping class="com.big.web.model.ErrorLogVO"/>
+  <mapping class="com.big.web.model.User"/>
+  <mapping class="com.big.web.model.Role"/>
+  <mapping class="com.big.web.b2b_big2.agent.model.AgentTrxUsdVO"/>
+  <mapping class="com.big.web.b2b_big2.agent.model.AgentTrxVO"/>
+  <mapping class="com.big.web.b2b_big2.agent.model.AccTrxDtlVO"/>
+  <mapping class="com.big.web.b2b_big2.agent.model.AgentVO"/>
+  <mapping class="com.big.web.b2b_big2.agent.model.Whole_SalerVO"/>
+  <mapping class="com.big.web.b2b_big2.agent.model.PackageVO"/>
+  <mapping class="com.big.web.b2b_big2.agent.model.UserPrefVO"/>
+  
+  <mapping class="com.big.web.b2b_big2.email.model.EmailVO"/>
+  
+  <mapping class="com.big.web.b2b_big2.finance.bank.model.TransBcaVO"/>
+  <mapping class="com.big.web.b2b_big2.finance.bank.model.TopUpCounterVO"/>
+  <mapping class="com.big.web.b2b_big2.finance.bank.model.BankVO"/>
+  <mapping class="com.big.web.b2b_big2.finance.bank.model.CIMBVANCounterVO"/>
+<!--   <mapping class="com.big.web.b2b_big2.finance.bank.model.VANGroupVO"/> -->
+  <mapping class="com.big.web.b2b_big2.finance.bank.model.PaymentWayVO"/>
+  <mapping class="com.big.web.b2b_big2.finance.bank.model.TopUpVO"/>
+  <mapping class="com.big.web.b2b_big2.finance.model.CommissionVO"/>
+  <mapping class="com.big.web.b2b_big2.finance.model.CommissionRangeVO"/>
+  
+  <mapping class="com.big.web.b2b_big2.feeds.model.FeedsVO"/>
+  
+<!--   <mapping class="com.big.web.b2b_big2.flight.model.FlightDetailsVO"/> -->
+  <mapping class="com.big.web.b2b_big2.country.model.CountryVO"/>
+  <mapping class="com.big.web.model.UserAccountVO"/> 
+<!--   <mapping class="com.big.web.b2b_big2.setup.model.SetupVO"/> -->
+  <mapping class="com.big.web.model.KabupatenVO"/>
+  <mapping class="com.big.web.model.PropinsiVO"/>
+  <mapping class="com.big.web.b2b_big2.flight.model.AirlineVO"/>
+  <mapping class="com.big.web.b2b_big2.flight.model.AirportVO"/>
+  <mapping class="com.big.web.b2b_big2.flight.model.TerminalVO"/>
+<!--   <mapping class="com.big.web.b2b_big2.flight.model.FlightClassFareVO"/> -->
+  <mapping class="com.big.web.b2b_big2.flight.model.FlightClassFareAirAsiaVO"/>
+  <mapping class="com.big.web.b2b_big2.flight.model.FlightClassFareAviastarVO"/>
+  <mapping class="com.big.web.b2b_big2.flight.model.FlightClassFareCitilinkVO"/>
+  <mapping class="com.big.web.b2b_big2.flight.model.FlightClassFareKalstarVO"/>
+  <mapping class="com.big.web.b2b_big2.flight.model.FlightClassFareGarudaVO"/>
+  <mapping class="com.big.web.b2b_big2.flight.model.FlightClassFareBatikVO"/>
+  <mapping class="com.big.web.b2b_big2.flight.model.FlightClassFareLionVO"/>
+  <mapping class="com.big.web.b2b_big2.flight.model.FlightClassFareMalindoVO"/>
+  <mapping class="com.big.web.b2b_big2.flight.model.FlightClassFareSriwijayaVO"/>
+  <mapping class="com.big.web.b2b_big2.flight.model.FlightClassFareNamVO"/>
+  <mapping class="com.big.web.b2b_big2.flight.model.FlightClassFareSusiVO"/>
+  <mapping class="com.big.web.b2b_big2.flight.model.FlightClassFareTriganaVO"/>
+  <mapping class="com.big.web.b2b_big2.flight.model.FlightClassFareXpressVO"/>
+  <mapping class="com.big.web.b2b_big2.flight.model.FlightAvailSeatVO"/>
+  <mapping class="com.big.web.b2b_big2.flight.model.MstRouteSaveVO"/>
+  <mapping class="com.big.web.b2b_big2.flight.model.ODRStatusVO"/>
+  
+  <mapping class="com.big.web.b2b_big2.booking.model.BookingFlightVO"/>
+  <mapping class="com.big.web.b2b_big2.booking.model.BookingFlightDtlVO"/>
+  <mapping class="com.big.web.b2b_big2.booking.model.BookingFlightSchedVO"/>
+  <mapping class="com.big.web.b2b_big2.booking.model.BookingFlightTransVO"/>
+  <mapping class="com.big.web.b2b_big2.booking.model.BookingHotelVO"/>
+
+  <mapping class="com.big.web.b2b_big2.hotel.model.HotelVO"/>
+
+  <mapping class="com.big.web.b2b_big2.customer.model.QCustomer"/>
+  
+  
+ </session-factory>
+</hibernate-configuration>

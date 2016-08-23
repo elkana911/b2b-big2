@@ -1,0 +1,59 @@
+SILAKAN DIPILIH-PILIH :)
+
+
+VIEW:
+<select name="agent" ...
+     <option value="" <c:if test="${empty param.agent})"> 'selected' </c:if> >ALL</option>
+     <c:forEach items="${wholesaler}" var="agency">
+          <option value="${agency.agent_id}" ${fn:contains(param.agent, agency.agent_id) ? 'selected' : ''}>${agency.agentName}</option>
+     </c:forEach>
+</select>
+jika tipe agent adalah Long, jgn lakukan param.agent == agency.id, tapi tetap pake fn:contains utk cek value 
+CONTROLLER:
+public ModelAndView handleRequest(@RequestParam(required = false, value = "agent") Long agentId) throws Exception {
+...
+
+
+*******************************************************************************************************
+VIEW:
+<select name="code" class="form-control" style="width:14em; display: inline;"  >
+ 	<option value="all" <c:if test="${empty param.code || param.code == 'all'})"> 'selected' </c:if> >ALL</option>
+    <c:forEach items="${airlines}" var="airline">
+    	<option value="${airline.code}" ${fn:contains(param.code, airline.code) ? 'selected' : ''}>${airline.name}</option>
+	</c:forEach>
+</select>
+
+CONTROLLER:
+
+
+*******************************************************************************************************
+
+VIEW:
+<form:select path="bankCodeATM" cssClass="form-control input-sm">
+    <c:forEach items="${paymentBanks}" var="item">
+        <form:option value="${item.code}">${item.aka}</form:option>
+    </c:forEach>
+</form:select>   
+
+CONTROLLER:
+
+*******************************************************************************************************
+
+
+
+
+
+*******************************************************************************************************
+
+
+
+
+*******************************************************************************************************
+
+
+
+
+*******************************************************************************************************
+	  			
+
+

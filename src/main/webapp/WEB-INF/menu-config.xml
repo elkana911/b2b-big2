@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MenuConfig>
+    <Displayers>
+        <Displayer name="Velocity" type="net.sf.navigator.displayer.VelocityMenuDisplayer"/>
+    </Displayers>
+    <Menus>
+        <Menu name="Home" title="home.title" page="/home" roles="ROLE_ADMIN,ROLE_USER,ROLE_MANDIRA_ADMIN,ROLE_SPV"/>
+        <Menu name="UserMenu" title="menu.user" description="User Menu" page="/agent/agentprofile" roles="ROLE_USER"/>
+        
+        <Menu name="TicketMenu" title="menu.ticket" description="Ticket Menu" page="/home" roles="ROLE_ADMIN,ROLE_USER,ROLE_MANDIRA_ADMIN">
+<!--             <Item name="ViewSearchFlightODR" title="menu.test.flight.search.odr" page="/flight/b2b/searchODR?from=menu"/> -->
+            <Item name="TicketFlight" title="menu.flight" page="/flight/b2b/searchnew?from=menu"/>
+            <Item name="TicketHotel" title="menu.hotel" page="/hotel/b2b/search"/>
+<!--             <Item name="TicketRentCar" title="menu.rentCar" page="/train/b2b/search"/> -->
+        </Menu>
+        <Menu name="TopUpMenu" title="menu.topup" description="Top Up" page="/agent/topup" roles="ROLE_USER"/>
+        
+        <Menu name="ReportMenu" title="menu.report" description="Reports" roles="ROLE_USER,ROLE_SPV">
+            <Item name="ViewRevenue" title="menu.report.revenue" page="/report/revenue"/>
+            <Item name="ViewTopUpHist" title="menu.report.topupHistory" page="/report/topuphist"/>
+            <Item name="ViewBookingHist" title="menu.report.bookingHistory" page="/report/bookinghist"/>
+        </Menu>
+        
+        <Menu name="MandiraAdminReportMenu" title="menu.report" description="Reports" roles="ROLE_MANDIRA_ADMIN">
+            <Item name="ViewSales" title="menu.report.sales" page="/report/mandira/sales"/>
+            <Item name="ViewSubAgents" title="menu.report.subAgents" page="/report/mandira/subagents"/>
+            <Item name="ViewSubAgentsPerformace" title="menu.report.subAgents.performance" page="/report/mandira/subagentsperform"/>
+<!--             <Item name="ViewCommission" title="menu.report.commission" page="/report/mandira/commission"/> -->
+        </Menu>
+
+        <Menu name="AirlineMenu" title="menu.airline" description="Airline Menu" page="/flight/airlines" roles="ROLE_ADMIN,ROLE_USER,ROLE_MANDIRA_ADMIN"/>
+
+        <Menu name="MandiraAdminMenu" title="menu.admin" description="Admin Menu" roles="ROLE_MANDIRA_ADMIN" page="/admin/users">
+<!--             <Item name="ViewSubAgents" title="menu.admin.subAgents" page="/admin/subagents"/> -->
+            <Item name="ChangePwd" title="updatePassword.changePasswordButton" page="/updatePassword"/>
+        </Menu>
+        <Menu name="AdminMenu" title="menu.admin" description="Admin Menu" roles="ROLE_ADMIN" page="/admin/users">
+            <Item name="ViewNews" title="menu.admin.news" page="/admin/newslist"/>
+            <Item name="ViewUsers" title="menu.admin.users" page="/admin/users"/>
+            <Item name="ViewAirports" title="menu.admin.airports" page="/admin/airports?country=ID"/>
+            <Item name="ViewAirlines" title="menu.admin.airlines" page="/admin/airlines"/>
+            <Item name="ViewRoutes" title="menu.admin.routes" page="/admin/airlineroutes"/>
+            <Item name="ViewUpdateRoutes" title="menu.admin.update.route" page="/admin/flight/updateroute"/>
+<!--             <Item name="ViewHotels" title="menu.admin.hotels" page="/admin/hotels"/> -->
+            <Item name="ViewAgents" title="menu.admin.agents" page="/admin/agents"/>
+            <Item name="ViewSubAgents" title="menu.admin.subAgents" page="/admin/subagents"/>
+            <Item name="ViewMonitor" title="menu.admin.monitor" page="/admin/monitor"/>
+            <Item name="ViewTopUps" title="menu.admin.topup" page="/admin/topups"/>
+            <Item name="ViewTask" title="menu.admin.tasks" page="/admin/tasks"/>
+<!--             <Item name="ActiveUsers" title="home.activeUsers" page="/admin/activeusers"/> -->
+<!--             <Item name="ReloadContext" title="menu.admin.reload" page="/admin/reload"/> -->
+<!--             <Item name="FileUpload" title="menu.selectFile" page="/fileupload"/> -->
+        </Menu>
+        <Menu name="SpvMenu" title="menu.admin" description="Admin Menu" roles="ROLE_SPV" page="/admin/users">
+            <Item name="ViewNews" title="menu.admin.news" page="/admin/newslist"/>
+            <Item name="ViewAirports" title="menu.admin.airports" page="/admin/airports"/>
+            <Item name="ViewAirlines" title="menu.admin.airlines" page="/admin/airlines"/>
+            <Item name="ViewRoutes" title="menu.admin.routes" page="/admin/airlineroutes"/>
+<!--             <Item name="ViewHotels" title="menu.admin.hotels" page="/admin/hotels"/> -->
+            <Item name="ViewAgents" title="menu.admin.agents" page="/admin/agents"/>
+            <Item name="ViewSubAgents" title="menu.admin.subAgents" page="/admin/subagents"/>
+            <Item name="ViewMonitor" title="menu.admin.monitor" page="/admin/monitor"/>
+        </Menu>
+        <Menu name="HelpMenu" title="menu.help" description="Help" roles="ROLE_ANONYMOUS,ROLE_ADMIN,ROLE_USER,ROLE_SPV,ROLE_MANDIRA_ADMIN">
+<!--             <Item name="ViewPreferences" title="menu.preferences" page="/preferences"/> -->
+            <Item name="ViewGuideTopUp" title="menu.help.guide.topup" page="/guide/topup"/>
+            <Item name="ViewGuidePayment" title="menu.help.guide.payment" page="/guide/payment"/>
+            <Item name="ViewGuideReservation" title="menu.help.guide.reservation" page="/guide/reservation"/>
+            <Item name="ViewGuideTac" title="menu.help.tac" page="/guide/tac"/>
+        </Menu>
+        <Menu name="Logout" title="user.logout" page="/logout" roles="ROLE_ADMIN,ROLE_USER,ROLE_MANDIRA_ADMIN,ROLE_MANDIRA_SPV,ROLE_SPV"/>
+    </Menus>
+</MenuConfig>

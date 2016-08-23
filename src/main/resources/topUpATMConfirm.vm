@@ -1,0 +1,19 @@
+Pembayaran untuk Account ${accountVA} telah diterima Berleha.com
+
+Dear ${user.firstName},
+
+${message}
+
+Payment Type: {paymentType}
+Amount: {amount}
+Amount in words: ${amountWords}
+
+Your account balance will be credited within 1 hour.
+
+Best Regards,
+
+Berleha Agency Network
+Ruko Rodeo Blok C 20
+Jl. Boulevard Gading SErpong
+Tangerang, 15810
+021-6899-8398
